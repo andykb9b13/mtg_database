@@ -56,16 +56,7 @@ Card.init(
     colorlessManaCost: {
       type: DataTypes.INTEGER,
     },
-    keyword1: {
-      type: DataTypes.STRING,
-    },
-    keyword2: {
-      type: DataTypes.STRING,
-    },
-    keyword3: {
-      type: DataTypes.STRING,
-    },
-    keyword4: {
+    keywords: {
       type: DataTypes.STRING,
     },
   },
