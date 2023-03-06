@@ -14,51 +14,51 @@ router.get("/", async (req, res) => {
 });
 
 // get a card by an id
-// router.get("/:id", async (req, res) => {
-//   try {
-//     const searchedCard = await Card.findbyPk(req.params.id);
-//     const card = searchedCard.get({ plain: true });
-//     res.render("card", card);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+router.get("/:id", async (req, res) => {
+  try {
+    const card = await Card.findByPk(req.params.id);
+    res.status(200).json(card);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
-// router.get("/color/:color", async (req, res) => {
-//   try {
-//     const colorCards = await Card.findAll({
-//       where: {
-//         colorId: req.params.color,
-//       },
-//     });
-//     const cards = colorCards.map((c) => c.get({ plain: true }));
-//     res.render("card", cards);
-//   } catch (err) {
-//     res.status(400).send(err);
-//   }
-// });
+router.get("/color/:color", async (req, res) => {
+  try {
+    const colorCards = await Card.findAll({
+      where: {
+        colorId: req.params.color,
+      },
+    });
+    // const cards = colorCards.map((c) => c.get({ plain: true }));
+    // res.render("card", cards);
+    res.status(200).json(colorCards);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
 
-// router.get("/keyword/:keyword", async (req, res) => {
-//   try {
-//     const foundCards = await Card.findAll({
-//       where: {
-//         keyword1: req.params.keyword,
-//       },
-//     });
-//     res.status(200).json(foundCards);
-//   } catch (err) {
-//     res.status(500).send(err);
-//   }
-// });
+router.get("/keyword/:keyword", async (req, res) => {
+  try {
+    const foundCards = await Card.findAll({
+      where: {
+        keyword1: req.params.keyword,
+      },
+    });
+    res.status(200).json(foundCards);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
 
-// router.post("/", async (req, res) => {
-//   try {
-//     const newCard = await Card.create(req.body);
-//     res.status(200).json(newCard);
-//   } catch (err) {
-//     res.status(500).send("Could not add card to database", err);
-//   }
-// });
+router.post("/", async (req, res) => {
+  try {
+    const newCard = await Card.create(req.body);
+    res.status(200).json(newCard);
+  } catch (err) {
+    res.status(500).send("Could not add card to database", err);
+  }
+});
 
 router.post("/seed", async (req, res) => {
   try {
