@@ -1,10 +1,6 @@
 <div>
-  <h2>Card that is searched</h2>
-{{#each cards as |card|}}
-  <div>
-    <p>{{id}}</p>
-    <p>{{cardName}}</p>
-    <p>{{color}}</p>
-  </div>
-
+  <h2>Cards that are searched</h2>
+  {{#each cards as |card|}}
+  {{> card-details}}
+  {{/each}}
 </div>

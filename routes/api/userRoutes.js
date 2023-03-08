@@ -5,11 +5,10 @@ const Card = require("../../models/Card");
 router.get("/", async (req, res) => {
   try {
     const cardData = await Card.findAll();
-    // const cards = cardData.map((c) => c.get({ plain: true }));
-    console.log(cardData);
-    // const cards = cardData.map((c) => c.get({ plain: true }));
-    // res.render("card", cards);
-    res.status(200).json(cardData);
+    // console.log(cardData);
+    const cards = cardData.map((c) => c.get({ plain: true }));
+    res.render("card", { cards });
+    // res.status(200).json(cardData);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -18,8 +17,10 @@ router.get("/", async (req, res) => {
 // get a card by an id
 router.get("/:id", async (req, res) => {
   try {
-    const card = await Card.findByPk(req.params.id);
-    res.status(200).json(card);
+    const cardData = await Card.findByPk(req.params.id);
+    const card = cardData.get({ plain: true });
+    // res.status(200).json(card);
+    res.render("card-details", { card });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -148,36 +149,36 @@ router.post("/seed", async (req, res) => {
   }
 });
 
-router.put("/:name", async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     const editedCard = await Card.findOne({
       where: {
-        cardName: req.params.name,
+        id: req.params.id,
       },
     });
     if (!editedCard) {
       res.send("Could not find a card with that id");
       return;
     }
-    Card.update(req.body);
+    editedCard.update(req.body);
     res.status(200).json(editedCard);
   } catch (err) {
     res.status(500).send(err);
   }
 });
 
-// router.delete("/:name", async (req, res) => {
-//   try {
-//     await Card.destroy({
-//       where: {
-//         cardName: req.params.name,
-//       },
-//       force: true,
-//     });
-//     res.status(200).send("card was successfully deleted");
-//   } catch {
-//     res.status(500).send("there was a problem deleting card");
-//   }
-// });
+router.delete("/:id", async (req, res) => {
+  try {
+    await Card.destroy({
+      where: {
+        id: req.params.id,
+      },
+      force: true,
+    });
+    res.status(200).send("card was successfully deleted");
+  } catch {
+    res.status(500).send("there was a problem deleting card");
+  }
+});
 
 module.exports = router;
