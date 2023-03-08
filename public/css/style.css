@@ -1,0 +1,7 @@
+.card-box {
+  border: 1px solid black;
+  background-color: coral;
+  border-radius: 3px;
+  width: 25%;
+  margin: 10px;
+}
